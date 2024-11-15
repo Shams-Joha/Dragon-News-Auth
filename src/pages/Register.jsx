@@ -4,19 +4,28 @@ import { AuthContext } from "../provider/AuthProvider";
 
 const Register = () => {
 
-    const { user, setUser } = useContext(AuthContext);
+    const { setUser, createNewUser } = useContext(AuthContext);
 
     const handleOnSubmit = e => {
         e.preventDefault();
-        // 
+
+        // Get data from input
         const name = e.target.name.value;
         const photo = e.target.photo.value;
         const password = e.target.password.value;
         const email = e.target.email.value;
-        
+
+        createNewUser(email, password)
+            .then(result => {
+                const user = result.user;
+                setUser(user);
+            })
+            .catch(error => console.log(error.message))
 
 
     }
+
+    
 
     return (
         <div className="min-h-screen flex justify-center items-center">
